@@ -28,8 +28,8 @@ covDir <- function(alpha, K){
 }
 
 n <- 1000
-K <- 3
-alpha <- runif(K)*10
+K <- 2
+alpha <- 1:K
 
 zSample <- matrix(0,K,n)
 dirSample <- matrix(0,K,n)
@@ -47,7 +47,12 @@ for (i in 1:n) {
 for (j in 1:K) {
   dirMean[j] <- mean(dirSample[j,])
 }
+truehist(dirSample[1,])
 truehist(dirSample[2,])
+
+# Verify marginal distributions are beta
+betaSamples <- dbeta(alpha[2], 1, 1)
+print(betaSamples)
 
 # Print true mean 
 print("Estimated mean")
