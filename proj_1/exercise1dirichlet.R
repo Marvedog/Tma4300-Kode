@@ -1,5 +1,6 @@
 # Problem B: Dirichlet distribution
 library(MASS)
+library(Compositional)
 setwd("/home/shomea/m/marcusae/Documents/git/Tma4300-Kode/proj_1")
 source("sampleGamma.R")
 
@@ -27,36 +28,40 @@ covDir <- function(alpha, K){
   return (cov_out)
 }
 
-n <- 1000
-K <- 2
+n <- 10000
+K <- 3
 alpha <- 1:K
 
-zSample <- matrix(0,K,n)
-dirSample <- matrix(0,K,n)
+zSample <- matrix(0,n,K)
+dirSample <- matrix(0,n,K)
 dirMean <- matrix(0,K,1)
 
 for (i in 1:n) {
   for (j in 1:K){
-    zSample[j, i] <- sampleGamma(alpha[j], 1, 1)
+    zSample[i, j] <- sampleGamma(alpha[j], 1, 1)
   }
   for (j in 1:K){
-    dirSample[j, i] <- zSample[j,i]/(sum(zSample[,i]))
+    dirSample[i, j] <- zSample[i,j]/(sum(zSample[i,]))
   }
 }
 
 for (j in 1:K) {
   dirMean[j] <- mean(dirSample[j,])
 }
-truehist(dirSample[1,])
-truehist(dirSample[2,])
 
 # Verify marginal distributions are beta
-betaSamples <- dbeta(alpha[2], 1, 1)
-print(betaSamples)
+xUni <- seq(0,1,1/n)
+betaSamples_1 <- dbeta(xUni, alpha[1], sum(alpha)-alpha[1])
+betaSamples_2 <- dbeta(xUni, alpha[2], sum(alpha)-alpha[2])
+betaSamples_3 <- dbeta(xUni, alpha[3], sum(alpha)-alpha[3])
 
-# Print true mean 
-print("Estimated mean")
-print(dirMean)
-print("Mean True")
-print(meanDir(alpha, K))
 
+# Plotting
+truehist(dirSample[,1])
+lines(xUni, betaSamples_1)
+
+truehist(dirSample[,2])
+lines(xUni, betaSamples_2)
+
+truehist(dirSample[,3])
+lines(xUni, betaSamples_3)
