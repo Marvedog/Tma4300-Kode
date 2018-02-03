@@ -11,7 +11,7 @@ importanceSample <- function(p, N) {
 
   # Compute cumulative sum
   cumSum <- matrix(0,len_p, 1)
-  cumSum[0] <- p[1]
+  cumSum[1] <- p[1]
   for (i in 2:len_p) {
     cumSum[i] <- cumSum[i-1] + p[i]
   }
@@ -22,8 +22,9 @@ importanceSample <- function(p, N) {
   out <- matrix(0, len_p, 1)
   for (i in 1:N) {
     for (j in 1:len_p) {
-      if (u[i] <= cumSum[j]) {
+      if (u[i] < cumSum[j]) {
         out[j] <- out[j] + 1
+        break
       }
     }
   }
