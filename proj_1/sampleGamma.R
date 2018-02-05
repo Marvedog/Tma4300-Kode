@@ -1,5 +1,5 @@
 # Sample gamma with any alpha and beta
-setwd("/home/shomea/g/ginama/V2018/git/Tma4300-Kode/proj_1")
+setwd("/home/shomea/m/marcusae/Documents/git/Tma4300-Kode/proj_1")
 source("sampleGammaRatioUniforms.R")
 source("sampleGammaRejection.R")
 source("sampleExponential.R")

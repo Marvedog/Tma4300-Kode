@@ -36,7 +36,6 @@ sampleGammaRatioUniforms <- function(alpha, n) {
       
       # Increment
       it <- it + 1
-      #print(log_u_1 - f_star(log_x, alpha)); flush.console()
       count <- count + 1
     }
     else {

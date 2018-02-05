@@ -45,6 +45,7 @@ truehist(xsample2, xlab = "Samples", main = "Probability integral transform", xl
 lines(x,gfunc, col = "red", lwd = 3)
 
 
+<<<<<<< HEAD
 
 # #-------- Rejection sampling----------#
 

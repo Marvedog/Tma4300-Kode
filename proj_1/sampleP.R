@@ -1,4 +1,4 @@
-setwd("/home/shomea/g/ginama/V2018/git/Tma4300-Kode/proj_1")
+setwd("/home/shomea/m/marcusae/Documents/git/Tma4300-Kode/proj_1")
 source("importanceSample.R")
 
 findIndex <- function(vec){
@@ -26,7 +26,7 @@ samplePosterior <- function(p, students, draws, daysInSeason) {
   
   post <- matrix(0, draws, 1)
   out <- matrix(1, length(p),1)
-  
+    
   # For efficiency
   #p <- sort(p, ndex.return = FALSE)
   

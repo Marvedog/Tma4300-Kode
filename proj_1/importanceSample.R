@@ -8,7 +8,7 @@
 importanceSample <- function(p, N) {
   
   len_p <- length(p)
-  
+
   # Compute cumulative sum
   cumSum <- matrix(0,len_p, 1)
   cumSum[1] <- p[1]
