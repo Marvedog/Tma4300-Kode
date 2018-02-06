@@ -406,6 +406,8 @@ Assume now a Dirichlet prior with $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 2
 Importance sampling
 
 Comment and explain result:
+Small equal alphas won't affect the distribution to much. Basicly implying that the observations will play the more important role in terms of the resulting posterior mean probability. Bigger alphas with all being equal will give uniformly distributed birthdays between seasons, thereby pushing the $q_i$ closer to $0.25$. In other words, the observations will become less important as alpha increases.
+
 - Small alphas, all equal, will not affect the distribution that much, the observations have a lot to say
 - Bigger alphas, if all are equal, will give uniformly distributed birthdays between seasons, and push the $q_i$s closer to $0.25$ (since the observations become less important.) Meaning we should get a similar result as in C1. 
 $\alpha_i$ significantly bigger than the others alphas will increase the $q_i$ (seen in pdf expression for $q|x$), the chance of colliding birthdays is bigger and thus p increases. 
