@@ -263,6 +263,7 @@ f_{z}(z,\alpha) dz_1...dz_k &\propto
 \]
 
 
+%% exersice1dirichlet.R 
 
 
 
@@ -306,30 +307,26 @@ The difference between the simulated and exact answer is of order $10^{-3}$ or b
 The posterior distribution of $(q_1, q_2, q_3, q_4)$, the distribution of the probabilities of being born in a specific season given observations, is 
 \[
 \begin{aligned}
-P(q_{1:4}|x_{1:4}) &= \frac{P(x_{1:4}|q_{1:4})P(q_{1:4})}{integral of something P(x_{1:4})} \\
-&\propto P(x_{1:4}|q_{1:4})P(q_{1:4}) \\
+p(q_{1:4}|x_{1:4}) &= \frac{p(x_{1:4}|q_{1:4})P(q_{1:4})}{\int p(x_{1:4}|q_{1:4})P(q_{1:4})dq_{1:4}} \\
+&\propto p(x_{1:4}|q_{1:4})P(q_{1:4}) \\
 &\propto \prod_{i=1}^{k}q_i^{x_i}\cdot \prod_{i=1}^{k}q_{i}^{\alpha_i-1} \\
 &\propto \prod_{i=1}^{k} q_i^{x_i+\alpha_i-1} \\
 &\propto \prod_{i=1}^{k} q_i^{\bar{\alpha_i}-1}
 \end{aligned}
 \]
  where $(x_{1:4}) = (x_1, x_2, x_3, x_4)$ and similary for $q$. Thus, the posterior distribution of $(q_1, q_2, q_3, q_4)$ is a Dirichlet distribution with parameters $\bar\alpha{i} = x_i + \alpha_i$, $i = 1,...,4$. 
- - What is k? 
-
 
 #### b) 
 When the joint posterior distribution of $q_{1:4}$ is Dirichlet, the marginal distribution for each season is $q_i \sim beta \left(\alpha_i, \sum\limits_{k=1}^{4}\alpha_k - \alpha_i\right)$.
 
-These marginal distributions are plotted by simulating several Dirichlet distributions $x = (x_1,...,x_K)$, extracting for instance all $x_1$s, which are beta distributed with the same parameters, and making a histogram of these samples. The built-in function in R is used to verify that the simulation of the beta distributions, and thus also the Dirichlet distribution, is correct. ?? Built-in or sample? Another option is to simulate the marginal beta distributions by using the relation between the gamma and the beta distribution, since we in the previous tasks have shown this sample generator to be reasonably correct. 
+These marginal distributions are plotted by simulating several Dirichlet distributions $x = (x_1,...,x_K)$, extracting for instance all $x_1$s, which are beta distributed with the same parameters, and making a histogram of these samples. The built-in function in R is used to verify that the simulation of the beta distributions, and thus also the Dirichlet distribution. Another option is to simulate the marginal beta distributions by using the relation between the gamma and the beta distribution, since we in the previous tasks have shown this sample generator to be reasonably correct. 
 
-
-
+%% sampleBeta.R
 
 ```{r pressure, echo=FALSE}
 plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 ### 3: Sample/Estimate p
 
@@ -343,10 +340,10 @@ and set $m = 35$ again.
 
 #### a) Sampling from posterior distribution $P(q_1,q_2,q_3,q_4|x_1,x_2,x_3,x_4)$ and $P(N_1,N_2,N_3,N_4|q_1,q_2,q_3,q_4)$))
 
-Sampling from posterior distribution $P(q_1,q_2,q_3,q_4|x_1,x_2,x_3,x_4)$ 
+Sampling from posterior distribution $p(q_1,q_2,q_3,q_4|x_1,x_2,x_3,x_4)$ 
 
 KODE
-
+%% sampleMultinomial.R
 
 ------------
 As in C.2, the distribution of $(N_1,N_2,N_3,N_4|q_1,q_2,q_3,q_4)$ will be multinomial with parameters $(m,q_1,q_2,q_3,q_4)$, but with $m = 35$.
@@ -368,7 +365,7 @@ p = f(N_1, N_2, N_3, N_4)
 can be found by seeing that
 \[
 \begin{aligned}
-p &= P \left[ \left( Y_1 \cup Y_2 \cup Y_3 \cup Y_4 \right) =1\right]
+p &= P \left[ \left( Y_1 \cup Y_2 \cup Y_3 \cup Y_4 \right) =1\right]\\
 &= 1- P\left[ \left( Y_1 \cup Y_2 \cup Y_3 \cup Y_4 \right) =0\right]
 \end{aligned}
 \]
@@ -385,12 +382,12 @@ Now, since the outcome of $Y_i$ is binary, we can render the above equation to a
 \[
 \begin{aligned}
 P(Y_i = 0) &= \frac{K_i(K_i-1)(K_i-2)...(K_i-(N_i-1))}{K_i!} \\
-{K_i\choose N_i} \cdot \frac{N_i!}{K_i^{N_i}}
+&= {K_i\choose N_i} \cdot \frac{N_i!}{K_i^{N_i}}
 \end{aligned}
 \]
 and so
 \[
-p = 1-\left[\sum\limits_{i=1}^{4} {K_i \choose N_i } \cdot \frac{N_i!}{K_i!}\right]
+p = 1-\left[\sum\limits_{i=1}^{4} {K_i \choose N_i } \cdot \frac{N_i!}{K_i^{N_i}}\right]
 \]
 
 Now $p$ can be calculated by sampling from $(N_1,N_2,N_3,N_4|q_1,q_2,q_3,q_4)$, the multinomial distribution, calculating $p$ by using the formula above, repeating this $n$ times and then calculate the mean. 
@@ -398,6 +395,9 @@ Now $p$ can be calculated by sampling from $(N_1,N_2,N_3,N_4|q_1,q_2,q_3,q_4)$, 
 Confidence interval of posterior mean of $p$: Sort all the $n$ found values for $p$, and then remove the $2.5\%$ highest and lowest values. 
 
 Posterior mean is larger than the probability in C.1. This is reasonable because the probabilities $q$ determine how likely it is to have a birthday within one season. If one $q_i$ is larger than another, there are more chances of birthdays colliding within that season, and thus the probability of two or more people having the same birthday increases. 
+
+%% sampleP.R
+%% exercise1sampelPosteriorMean.R
 
 
 #### c)
@@ -410,5 +410,5 @@ Comment and explain result:
 - Bigger alphas, if all are equal, will give uniformly distributed birthdays between seasons, and push the $q_i$s closer to $0.25$ (since the observations become less important.) Meaning we should get a similar result as in C1. 
 $\alpha_i$ significantly bigger than the others alphas will increase the $q_i$ (seen in pdf expression for $q|x$), the chance of colliding birthdays is bigger and thus p increases. 
 
-
+%% importanceSampling.R
 
