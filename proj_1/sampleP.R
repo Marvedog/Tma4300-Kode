@@ -1,5 +1,5 @@
 setwd("/home/shomea/m/marcusae/Documents/git/Tma4300-Kode/proj_1")
-source("importanceSample.R")
+source("sampleMultinomial.R")
 
 findIndex <- function(vec){
   for (i in 1:length(vec)) {
@@ -15,7 +15,7 @@ calcP <- function(weights, N, K) {
   # Choose random season
   u <- runif(1)
   p <- c(0.25, 0.5, 0.75, 1.0)
-  out <- importanceSample(p, 1)
+  out <- sampleMultinomial(p, 1)
   index <- findIndex(out)
   temp <- weights[index] * factorial(K[index]) / factorial(K[index]-N[index]) * 1 / K[index]^N[index]
   print(temp)
@@ -31,7 +31,7 @@ samplePosterior <- function(p, students, draws, daysInSeason) {
   #p <- sort(p, ndex.return = FALSE)
   
   for (i in 1:draws){
-    out <- importanceSample(p, students)
+    out <- sampleMultinomial(p, students)
     post[i] <- calcP(p, out, daysInSeason)
   }
   print(out)

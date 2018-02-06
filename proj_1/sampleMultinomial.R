@@ -1,11 +1,11 @@
-# -------------- Importance sampling -----------------# 
+# -------------- Multinomial sampling -----------------# 
 # Input: 
 # p : Sorted list of probabilities summing to unity.
 # N : Number of draws
 # Output:
 # out: vector of draws corresponding to each interval
 
-importanceSample <- function(p, N) {
+sampleMultinomial <- function(p, N) {
   
   len_p <- length(p)
 
