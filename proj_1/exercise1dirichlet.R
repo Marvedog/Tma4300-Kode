@@ -19,7 +19,6 @@ meanDir <- function(alpha, K){
 covDir <- function(alpha, K){
   alpha_0 <- sum(alpha)
   cov_out <- matrix(0, K, K)
-  print(alpha_0)
   for (i in 1:K) {
     for (j in 1:K){
       if (i != j) {

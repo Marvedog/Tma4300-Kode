@@ -3,7 +3,7 @@ setwd("/home/shomea/g/ginama/V2018/git/Tma4300-Kode/proj_1")
 source("sampleP.R")
 
 students <- 35
-draws <- 100
+draws <- 100000
 
 spring <- 92
 summer <- 92 
@@ -29,8 +29,10 @@ p[2] <- p2
 p[3] <- p3
 p[4] <- p4
 
-#means <- computePosteriorMeans(p, students, draws, daysInSeason)
-#print(means)
+means <- computePosteriorMeans(p, students, draws, daysInSeason)
+means_sorted <- sort(means)
+truehist(means_sorted[2500:97500])
+print(mean(means))
 
 N <- matrix(1, 4, 1)
 

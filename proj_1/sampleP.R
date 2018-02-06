@@ -18,7 +18,6 @@ calcP <- function(weights, N, K) {
   out <- sampleMultinomial(p, 1)
   index <- findIndex(out)
   temp <- weights[index] * factorial(K[index]) / factorial(K[index]-N[index]) * 1 / K[index]^N[index]
-  print(temp)
   return (1 - temp)
 }
 
@@ -34,8 +33,7 @@ samplePosterior <- function(p, students, draws, daysInSeason) {
     out <- sampleMultinomial(p, students)
     post[i] <- calcP(p, out, daysInSeason)
   }
-  print(out)
-  
+
   return (post)
 }
 
